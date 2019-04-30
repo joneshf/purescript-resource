@@ -1,0 +1,31 @@
+{
+  "name": "purescript-resource",
+  "description": "Safe resource handling",
+  "authors": [
+    "Hardy Jones <jones3.hardy@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joneshf/purescript-resource.git"
+  },
+  "dependencies": {
+    "purescript-prelude": "^4.1.1",
+    "purescript-aff": "^5.1.1",
+    "purescript-effect": "^2.0.1",
+    "purescript-newtype": "^3.0.0",
+    "purescript-fork": "^4.0.0",
+    "purescript-control": "^4.1.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^4.0.0",
+    "purescript-spec": "^3.1.0",
+    "purescript-refs": "^4.1.0"
+  }
+}
