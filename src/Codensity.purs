@@ -14,6 +14,10 @@ import Effect.Aff.Class as Effect.Aff.Class
 import Effect.Class as Effect.Class
 import Ran as Ran
 
+type Codensity ::
+  (Type -> Type) ->
+  Type ->
+  Type
 type Codensity f a
   = Ran.Ran f f a
 

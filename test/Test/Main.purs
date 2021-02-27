@@ -9,12 +9,14 @@ import Effect.Ref as Effect.Ref
 import Resource as Resource
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions as Test.Spec.Assertions
-import Test.Spec.Assertions.Aff as Test.Spec.Assertions.Aff
 import Test.Spec.Reporter as Test.Spec.Runner.Repoter
 import Test.Spec.Runner as Test.Spec.Runner
 
 main :: Effect.Effect Unit
-main = Test.Spec.Runner.run [Test.Spec.Runner.Repoter.specReporter] do
+main = Effect.Aff.launchAff_ spec
+
+spec :: Effect.Aff.Aff Unit
+spec = Test.Spec.Runner.runSpec [Test.Spec.Runner.Repoter.specReporter] do
   Test.Spec.describe "Resource" do
     Test.Spec.describe "run" do
       Test.Spec.it "acquires and releases resources in the correct order" do
@@ -43,7 +45,7 @@ main = Test.Spec.Runner.run [Test.Spec.Runner.Repoter.specReporter] do
       Test.Spec.it "releases resources even with an exception" do
         results <- Effect.Class.liftEffect (Effect.Ref.new mempty)
 
-        Test.Spec.Assertions.Aff.expectError $ Resource.run do
+        Test.Spec.Assertions.expectError $ Resource.run do
           _ <- new results "foo"
           _ <- new results "bar"
           Resource.new (Effect.Aff.throwError $ Effect.Aff.error "break") pure

@@ -12,6 +12,11 @@ import Effect.Aff as Effect.Aff
 import Effect.Aff.Class as Effect.Aff.Class
 import Effect.Class as Effect.Class
 
+type Ran ::
+  (Type -> Type) ->
+  (Type -> Type) ->
+  Type ->
+  Type
 type Ran f g a
   = forall b. (a -> f b) -> g b
 
