@@ -1,7 +1,5 @@
-BOWER := npx bower
-BOWER_FLAGS ?=
-COMPILE_FLAGS ?= 
-DEPENDENCIES := 'bower_components/purescript-*/src/**/*.purs'
+COMPILE_FLAGS ?=
+DEPENDENCIES := '.spago/*/*/src/**/*.purs'
 NODE := node
 NPM := npm
 OUTPUT := output
@@ -10,6 +8,8 @@ PSCID := npx pscid
 PURS := npx purs
 PURTY := npx purty
 REPL_FLAGS ?=
+SPAGO := npx spago
+SPAGO_FLAGS ?=
 SRC := src
 TEST := test
 
@@ -19,12 +19,12 @@ SRC_OUTPUTS := $(patsubst $(SRC).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(SRCS)
 TEST_OUTPUTS := $(patsubst $(TEST).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(TESTS)))
 
 define SRC_OUTPUT_RULE
-$(patsubst $(SRC).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(1))): $(1) bower_components
+$(patsubst $(SRC).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(1))): $(1) .spago
 	$(PSA) compile $(COMPILE_FLAGS) $(DEPENDENCIES) $(SRCS)
 endef
 
 define TEST_OUTPUT_RULE
-$(patsubst $(TEST).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(1))): $(1) $(SRC_OUTPUTS) bower_components
+$(patsubst $(TEST).%.purs,$(OUTPUT)/%/index.js,$(subst /,.,$(1))): $(1) $(SRC_OUTPUTS) .spago
 	$(PSA) compile $(COMPILE_FLAGS) $(DEPENDENCIES) $(SRCS) $(TESTS)
 endef
 
@@ -45,19 +45,20 @@ $(OUTPUT)/test.js: $(OUTPUT)/Test.Main/index.js | $(OUTPUT)
 	  output/*/index.js \
 	  output/*/foreign.js
 
-bower_components: bower.json node_modules
-	$(BOWER) $(BOWER_FLAGS) install
+.spago: node_modules packages.dhall spago.dhall
+	rm -rf $@
+	$(SPAGO) $(SPAGO_FLAGS) install
 	touch $@
 
 .PHONY: build
-build: bower_components $(SRC_OUTPUTS)
+build: .spago $(SRC_OUTPUTS)
 
 .PHONY: clean
 clean:
 	rm -rf \
 	  .psc-ide-port \
 	  .psci_modules \
-	  bower_components \
+	  .spago \
 	  node_modules \
 	  output
 
@@ -71,11 +72,11 @@ node_modules: package.json
 	touch $@
 
 .PHONY: repl
-repl: bower_components
+repl: .spago
 	$(PURS) repl $(REPL_FLAGS) $(DEPENDENCIES) $(SRCS)
 
 .PHONY: test
-test: $(OUTPUT)/test.js bower_components $(SRC_OUTPUTS) $(TEST_OUTPUTS)
+test: $(OUTPUT)/test.js .spago $(SRC_OUTPUTS) $(TEST_OUTPUTS)
 	$(NODE) $<
 
 .PHONY: variables
