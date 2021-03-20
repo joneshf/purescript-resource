@@ -1,6 +1,6 @@
 {
   "name": "purescript-resource",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Safe resource handling",
   "main": "index.js",
   "scripts": {
