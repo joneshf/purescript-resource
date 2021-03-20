@@ -16,15 +16,15 @@
     "url": "https://github.com/joneshf/purescript-resource.git"
   },
   "dependencies": {
-    "purescript-prelude": ">= 4.0.0 < 5.0.0",
-    "purescript-aff": ">= 5.1.1 < 6.0.0",
-    "purescript-effect": ">= 2.0.0 < 3.0.0",
-    "purescript-newtype": ">= 2.0.0 < 4.0.0",
-    "purescript-control": ">= 1.0.0 < 5.0.0"
+    "purescript-prelude": ">= 5.0.0 < 6.0.0",
+    "purescript-aff": ">= 6.0.0 < 7.0.0",
+    "purescript-effect": ">= 3.0.0 < 4.0.0",
+    "purescript-newtype": ">= 4.0.0 < 5.0.0",
+    "purescript-control": ">= 5.0.0 < 6.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": ">= 4.0.0 < 5.0.0",
-    "purescript-spec": ">= 3.1.0 < 4.0.0",
-    "purescript-refs": ">= 4.1.0 < 5.0.0"
+    "purescript-psci-support": ">= 5.0.0 < 6.0.0",
+    "purescript-spec": ">= 5.0.0 < 6.0.0",
+    "purescript-refs": ">= 5.0.0 < 6.0.0"
   }
 }
